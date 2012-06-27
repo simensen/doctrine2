@@ -148,16 +148,14 @@ class SimplifiedXmlDriver extends XmlDriver
     protected function _findMappingFile($className)
     {
         $defaultFileName = str_replace('\\', '.', $className).$this->_fileExtension;
-        foreach ($this->_paths as $path) {
-            if (!isset($this->_prefixes[$path])) {
+        foreach ($this->_paths as $path => $prefix) {
+            if (!isset($this->_prefixes[$prefix])) {
                 if (is_file($path.DIRECTORY_SEPARATOR.$defaultFileName)) {
                     return $path.DIRECTORY_SEPARATOR.$defaultFileName;
                 }
 
                 continue;
             }
-
-            $prefix = $this->_prefixes[$path];
 
             if (0 !== strpos($className, $prefix.'\\')) {
                 continue;
